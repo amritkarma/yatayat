@@ -740,7 +740,7 @@ var colors = (function() {
     return colors;
 }());
 
-YY.single_route_render = function(system, route) {
+YY.single_route_render = function(system) {
     if (YY._routeGroup) {
         YY._routeGroup.clearLayers();
     }
@@ -754,34 +754,43 @@ YY.single_route_render = function(system, route) {
     } else {
         YY._singlelayer = new L.LayerGroup();
     }
-    _.each(route.segments, function(seg, idx) {
-        var latlngs = seg.listOfLatLng.map(function(LL) {
-            return new L.LatLng(LL[0], LL[1]);
-        });
-        var poly = new L.Polyline(latlngs, {
-            color: 'green',
-            weight: 7
-        });
-        YY._singlelayer.addLayer(poly);
-    });
-    route.stops.forEach(function(stop) {
-        var marker;
-        var ll = new L.LatLng(stop.lat, stop.lng);
-        marker = new L.marker(ll, {
-            icon: L.divIcon({
-                html: stop.name
-            })
-        });
-        YY._singlelayer.addLayer(marker);
+
+    var rt_bd = new L.LatLngBounds();
+    $(".routeinfopanel").each(function(index) {
+        if ($(this)[0].checked) {
+            var route = system.routeDict[$(this)[0].id];
+            var color = get_random_color()
+            _.each(route.segments, function(seg, idx) {
+                var latlngs = seg.listOfLatLng.map(function(LL) {
+                    return new L.LatLng(LL[0], LL[1]);
+                });
+                var poly = new L.Polyline(latlngs, {
+                    color: color,
+                    weight: 7
+                });
+                YY._singlelayer.addLayer(poly);
+            });
+            route.stops.forEach(function(stop) {
+                var marker;
+                var ll = new L.LatLng(stop.lat, stop.lng);
+                marker = new L.marker(ll, {
+                    icon: L.divIcon({
+                        html: stop.name
+                    })
+                });
+                YY._singlelayer.addLayer(marker);
+            });
+            rt_bd.extend(new L.LatLng(route.stops[0].lat, route.stops[0].lng));
+            rt_bd.extend(new L.LatLng(_.last(route.stops).lat, _.last(route.stops).lng));
+        }
     });
     map.addLayer(YY._singlelayer);
-    var rt_bd = new L.LatLngBounds();
-    rt_bd.extend(new L.LatLng(route.stops[0].lat, route.stops[0].lng));
-    rt_bd.extend(new L.LatLng(_.last(route.stops).lat, _.last(route.stops).lng));
-    map.fitBounds(rt_bd);
+    // map.fitBounds(rt_bd);
     return YY._singlelayer;
-};
+}
 
+/*    );
+ */
 // selectively export as a node module
 var module = module || {};
 module.exports = YY;
