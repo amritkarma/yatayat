@@ -5,21 +5,26 @@
         <title>
             Kathmandu Public Transport
         </title>
-        <!--link rel="stylesheet" href="lib/leaflet/leaflet.css" /-->
+        <!--global links-->
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+        <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->  
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+
+        <!--local links-->
+        <!--link rel="stylesheet" href="lib/leaflet/leaflet.css"-->
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="lib/yatayat.css" />
         <link rel="stylesheet" href="lib/autocomplete_styles.css">
+        <script src="lib/jquery.autocomplete.min.js"></script>
+        <script src="lib/underscore-min.js"> </script>
         <!--[if lte IE 8]>
             <link rel="stylesheet" href="lib/leaflet/leaflet.ie.css" />
         <![endif] -->
         <!--script src="lib/jquery-1.7.2.min.js"> </script-->
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
-        <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
-        <script type="text/javascript" src="lib/jquery.autocomplete.min.js"></script>
-        <script src="lib/underscore-min.js"> </script>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
         <!--script src="lib/leaflet/leaflet-src.js"> </script-->
+
+        <!--always local-->
         <script src="lib/leaflet/spin.min.js"> </script>
         <script src="lib/leaflet/leaflet.spin.js"> </script>
         <script src="lib/wax.leaf.min.js"> </script>
@@ -27,7 +32,7 @@
         <script src="lib/bootstrap/js/bootstrap.min.js"> </script>
         <script src="yatayat.js"> </script>
         <script src="lib/routeinfopanel.js"> </script>
- 
+        
     </head>
     
     <body>
@@ -466,8 +471,8 @@
                 }
                 map.setView(new L.LatLng(YY.LAT, YY.LNG), 13);
                 L.control.scale().addTo(map);
-                //auto init routing at start
-                //document.getElementById("startstop").value ="Matatirtha Stop";
+                // auto init routing at start
+                // document.getElementById("startstop").value ="Matatirtha Stop";
                 // document.getElementById("endstop").value ="Thimi";
                 // $('#endstop').change();
             });
