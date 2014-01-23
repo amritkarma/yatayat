@@ -78,7 +78,7 @@
                             <a class="btn" id="go"> GO </a>
                             <a class="btn" id="swap">Swap</a>
                             <div id ="clear" style="width:1000 px" align="left">
-                                <a class="btn clear" style="width:80 px" onclick="$('.typeahead').val(''); $('#routedisplay').hide(); YY._routeGroup.clearLayers();YY.render_(system,map);YY.zoomtofullextend(system,map);"> Clear </a>
+                                <a class="btn clear" style="width:80 px" onclick="$('.typeahead').val(''); $('#routedisplay').hide(); YY._routeGroup.clearLayers();YY.render_(system,map);"> Clear </a>
                             </div>
                         </div>
                     </div>
@@ -215,12 +215,13 @@
             // initialize the map
             var map = new L.Map('publicTransportMap');
 
+
             //var ktmBB = "85.2885,27.6839,85.3368,27.7299";
             var system;
             var osmdata;
             var routed;
             var routed_route;
-YY.fromConfig("config.stable.json", function(sys) {
+            YY.fromConfig("config.stable.json", function(sys) {
                 system = sys;
                 YY.render_(system, map, undefined, //includeIDObject; try {"2269045": true} for an example
                 undefined // leafletBaseOptions
@@ -459,7 +460,6 @@ YY.fromConfig("config.stable.json", function(sys) {
                             //another way of making bounds
                             // _(gettingThereRoutes).each(function(eachroute){
                             //     _(eachroute.stops).each(function(s){
-                            //         // var laat = s.
                             //         var latlngg = new L.LatLng(s.lat,s.lng);
                             //         console.log(latlngg);
                             //     });
@@ -507,6 +507,24 @@ YY.fromConfig("config.stable.json", function(sys) {
                 // document.getElementById("endstop").value ="Thimi";
                 // $('#endstop').change();
             });
+            $('#fullextend').show();
+            var panel = document.getElementById("fullextend");
+
+            var s = document.createElement("input");
+            s.src = "fe.png";
+            s.type = "image";
+            s.id = 'posahn';
+            s.height = '100px';
+            s.width = '76px';
+            panel.appendChild(s);
+            $('#posahn').click(function() {
+                // $('#fullextend').hide();
+                map.setView(new L.LatLng(YY.LAT, YY.LNG), 13);
+                // console.log("posahn");
+            });
+
+
+            
             function get_random_color() {
                 var letters = '0123456789ABCDEF'.split('');
                 var color = '#';

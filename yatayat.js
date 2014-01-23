@@ -69,7 +69,8 @@ YY.System.prototype.stopRoutesFromStopName = function(stopName) {
                 });
             }
         });
-    });    return aggregator;
+    });
+    return aggregator;
 
 };
 
@@ -648,7 +649,6 @@ YY.zoomtofullextend = function(system, map) {
     s.width = '76px';
     panel.appendChild(s);
 
-    var bounds;
     $('#posahn').click(function() {
         $('#fullextend').hide();
         map.setView(new L.LatLng(YY.LAT, YY.LNG), 13);
