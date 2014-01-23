@@ -36,13 +36,15 @@
         </div>
         <div class="alert" id="routedisplay" style="position:absolute;top:60;left:60;z-index:999;width:60%;background-color:rgb(228, 237, 249)">
         </div>
+        <div class="alert" id="fullextend" style="position:absolute;top:60;left:10;z-index:999;width:17%;">
+        </div>
         <div id="publicTransportMap" style="width:80%; height: 100%">
             Loading ...
         </div>
         <div class="modal hide" id="myModal">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    X
+                    Xbutton
                 </button>
             </div>
             <br/>
@@ -72,10 +74,11 @@
                             <input type="text" id="endstop" class="typeahead" data-provide="typeahead"
                             style="color:rgb(0,57,166)" /><br>
 
-                            <a class="btn" id="go"> GO </a><br>
+                            <a class="btn" id="go"> GO </a>
                             <a class="btn" id="swap">Swap</a><br>
-                            <a class="btn" onclick="$('.typeahead').val(''); $('#routedisplay').hide(); YY._routeGroup.clearLayers();YY.render_(system,map);"> Clear </a>
-
+                            <div id ="clear" style="width:1000 px" align="left">
+                                <a class="btn clear" style="width:80 px" onclick="$('.typeahead').val(''); $('#routedisplay').hide(); YY._routeGroup.clearLayers();YY.render_(system,map);YY.zoomtofullextend(system,map);"> Clear </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,7 +124,9 @@
                 </div>
             </div>
             <div class="accordion-group">
-                <div class="accordion-heading">
+                <div class="accordion-heading"Putting yourself in the Spotlight is a sure way of getting the attention of people you want to meet. Select your best profile photo and voilà - instant fame!
+
+>
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse4">
                         How to use
                     </a>
@@ -200,10 +205,12 @@
               <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
             </div>
         </div>
+ 
         <script type="text/javascript" language="javascript">
                     // UI HACK
             $('#textboxes').hide();
             $('#routedisplay').hide();
+            $('#fullextend').hide();
             // initialize the map
             var map = new L.Map('publicTransportMap');
 
@@ -274,7 +281,7 @@
                                 inclusionDict[r.id] = true;
                             }); // render everything
                             counter = 0;
-
+                            
                             _(gettingThereRoutes).each(function(eachroute, idx) {
                                 //inclusionDict[r.id] = true;
                                 bounds.extend(new L.LatLng(eachroute.stops[0].lat, eachroute.stops[0].lng));
@@ -443,8 +450,30 @@
                             YY._routeGroup.eachLayer(function(el){
                                 for (var i = 0; i <= el._latlngs.length; i++) {
                                     bounds.extend(el._latlngs[i]);
+
                                 };
                             });
+
+                            
+                            laatlnng = L.latLng(bounds.getNorth()+((bounds.getNorth()-bounds.getSouth())/2),bounds.getCenter().lng);
+                            bounds.extend(laatlnng);
+
+                            
+
+                            
+                            
+
+                            
+
+                            //another way of making bounds
+                            // _(gettingThereRoutes).each(function(eachroute){
+                            //     _(eachroute.stops).each(function(s){
+                            //         // var laat = s.
+                            //         var latlngg = new L.LatLng(s.lat,s.lng);
+                            //         console.log(latlngg);
+                            //     });
+                            // });
+
                             map.fitBounds(bounds);
                             //sures
 

@@ -270,6 +270,7 @@ YY.System.prototype.neighborNodes = function(stopID, routeID) {
             //}
         }
     });
+
     _.each(this.routes, function(r) {
         if (r.id !== routeID && _.find(r.stops, function(s) {
             return s.id === stopID;
@@ -640,7 +641,27 @@ YY.fromOSM = function(overpassXML) {
 
     return new YY.System(routes, stopToSegDict);
 }
+YY.zoomtofullextend = function(system, map) {
+    // console.log("poshan");
+    $('#routedisplay').hide();
+    $('#fullextend').show();
+    var panel = document.getElementById("fullextend");
 
+    var s = document.createElement("input");
+    s.src = "fe.png";
+    s.type = "image";
+    s.id = 'posahn';
+    s.height = '100px';
+    s.width = '76px';
+    panel.appendChild(s);
+
+    var bounds;
+    $('#posahn').click(function() {
+        $('#fullextend').hide();
+        map.setView(new L.LatLng(YY.LAT, YY.LNG), 13);
+        // console.log("posahn");
+    });
+};
 YY.render_ = function(system, map, includeIDDict, leafletBaseOptions, leafletOverrideOptions) {
     if (!YY._layerGroup) {
         YY._layerGroup = new L.LayerGroup();
