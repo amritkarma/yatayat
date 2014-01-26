@@ -750,7 +750,7 @@ var colors = (function() {
 }());
 
 YY.single_route_render = function(system, route) {
-    YY.funkie("displaying single route");
+    YY.statusbar("displaying single route");
     var rt_bd = new L.LatLngBounds();
     _(route.stops).each(function(s) {
         var latlngg = new L.LatLng(s.lat, s.lng);
