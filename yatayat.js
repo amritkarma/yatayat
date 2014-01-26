@@ -114,9 +114,8 @@ YY.System.prototype.nearestStops = function(llArr, N, maxDist) {
 //take startStopName and endStopName , then get array of stopID and routeID for the route and pass to takeMeThereByStop
 //1
 YY.System.prototype.takeMeThereByName = function(startStopName, goalStopName) {
-    // console.log("For"+startStopName+"stop");
+    YY.statusbar('determinig routes for you');
     var startNodes = this.stopRoutesFromStopName(startStopName); //2
-    // console.log("For"+startStopName+"stop");
     var goalNodes = this.stopRoutesFromStopName(goalStopName);
     if (_.isEmpty(startNodes) || _.isEmpty(goalNodes)) return 'FAIL: Start / Goal not found';
     // TODO: throw error if goal nodes are far away from each other
@@ -499,6 +498,8 @@ YY.Segment = function(id, listOfLatLng, listofnodeids, dictofnodes, tag, ordered
  * @return none
  */
 YY.fromConfig = function(config_path, cb) {
+    // $('#statusbar').show();
+    YY.statusbar('parsing xml');
     // step 1
     // console.profile("parsing xml");
     // console.time("parsing xml");
@@ -542,6 +543,7 @@ YY.Segment.prototype.flip = function() {
  * @return system
  */
 YY.fromOSM = function(overpassXML) {
+    YY.statusbar("creating routes from osm file");
     var nodes = {}; // nodes object referenced by id
     var segments = {}; // ways object referenced by id
     var routeStops = {};
@@ -635,26 +637,14 @@ YY.fromOSM = function(overpassXML) {
 
     return new YY.System(routes, stopToSegDict);
 }
-YY.zoomtofullextend = function(system, map) {
-    // console.log("poshan");
-    $('#routedisplay').hide();
-    $('#fullextend').show();
-    var panel = document.getElementById("fullextend");
+YY.statusbar = function(textfo) {
 
-    var s = document.createElement("input");
-    s.src = "fe.png";
-    s.type = "image";
-    s.id = 'posahn';
-    s.height = '100px';
-    s.width = '76px';
-    panel.appendChild(s);
+    $('#statusbar').show();
+    $('#statusbar').html(textfo);
 
-    $('#posahn').click(function() {
-        $('#fullextend').hide();
-        map.setView(new L.LatLng(YY.LAT, YY.LNG), 13);
-        // console.log("posahn");
-    });
 };
+
+
 YY.render_ = function(system, map, includeIDDict, leafletBaseOptions, leafletOverrideOptions) {
     if (!YY._layerGroup) {
         YY._layerGroup = new L.LayerGroup();
@@ -723,6 +713,8 @@ YY.render_ = function(system, map, includeIDDict, leafletBaseOptions, leafletOve
     });
     map.removeLayer(YY._layerGroup);
     map.addLayer(YY._layerGroup);
+    YY.statusbar('Enter start and end');
+
 };
 
 
@@ -758,6 +750,7 @@ var colors = (function() {
 }());
 
 YY.single_route_render = function(system, route) {
+    YY.funkie("displaying single route");
     var rt_bd = new L.LatLngBounds();
     _(route.stops).each(function(s) {
         var latlngg = new L.LatLng(s.lat, s.lng);

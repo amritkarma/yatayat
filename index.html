@@ -36,10 +36,12 @@
         </div>
         <div class="alert" id="routedisplay" style="position:absolute;top:60;left:60;z-index:999;width:60%;background-color:rgb(228, 237, 249)">
         </div>
+        <div class="alert" id="statusbar" style="position: absolute; bottom: 20px; left: 1px; z-index: 999; width: 20%; height: 5%; background-color: rgb(240, 246, 255); display: block;"></div>
+
         <div class="alert" id="fullextend" style="position:absolute;top:60;left:10;z-index:999;width:17%;">
         </div>
         <div id="publicTransportMap" style="width:80%; height: 100%">
-            Loading ...
+            Loading .......
         </div>
         <div class="modal hide" id="myModal">
             <div class="modal-header">
@@ -212,8 +214,11 @@
             $('#textboxes').hide();
             $('#routedisplay').hide();
             $('#fullextend').hide();
+            $('#statusbar').hide();
             // initialize the map
             var map = new L.Map('publicTransportMap');
+            
+            YY.statusbar('starting');
 
 
             //var ktmBB = "85.2885,27.6839,85.3368,27.7299";
@@ -221,6 +226,9 @@
             var osmdata;
             var routed;
             var routed_route;
+
+
+
             YY.fromConfig("config.stable.json", function(sys) {
                 system = sys;
                 YY.render_(system, map, undefined, //includeIDObject; try {"2269045": true} for an example
@@ -247,13 +255,14 @@
                 $('#textboxes').show();
                 // $('input.typeahead').change(function(f) {
                 $('#swap').click(function(){
-                    // console.log("last ramailo");
+                    YY.statusbar('swapping start and end');
                     temp = $('#startstop')[0].value;
                     $('#startstop')[0].value =  $('#endstop')[0].value;
                     $('#endstop')[0].value =  temp;
                     $('#go').click();
                 })
                 $('#go').click(function(){
+                    YY.statusbar('determining routes for you');
                     map.spin(true);
                     var start = $('#startstop')[0].value;
                     var end = $('#endstop')[0].value;
@@ -478,6 +487,7 @@
                             }, overrideDict);
                             $('#routedisplay').show();
                             $('#routedisplay').html(outputHTML);
+                            YY.statusbar('follow the direction as shown above');
                             map.spin(false);
                         }
                     } 
@@ -518,12 +528,15 @@
             s.width = '76px';
             panel.appendChild(s);
             $('#posahn').click(function() {
-                // $('#fullextend').hide();
+                
                 map.setView(new L.LatLng(YY.LAT, YY.LNG), 13);
-                // console.log("posahn");
+                YY.statusbar('showing full extend of map');
+                
             });
 
-
+            //status information bar
+            
+            
             
             function get_random_color() {
                 var letters = '0123456789ABCDEF'.split('');
